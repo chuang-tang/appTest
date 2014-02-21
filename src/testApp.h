@@ -18,5 +18,16 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+
+		ofTrueTypeFont  franklinBook14;
+		ofTrueTypeFont	verdana14;
+		ofTrueTypeFont	verdana30;
+
+		ofTrueTypeFont  franklinBook14A;
+		ofTrueTypeFont	verdana14A;
+
+        string username;
+        string text;
+		float alpha = 0;
+
 };
