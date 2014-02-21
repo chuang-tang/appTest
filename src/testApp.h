@@ -28,6 +28,8 @@ class testApp : public ofBaseApp{
 
         string username;
         string text;
+        string strPerU;
+        string strPerT;
 		float alpha = 0;
 
 };

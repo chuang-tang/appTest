@@ -29,6 +29,7 @@ void testApp::setup(){
 
     username = "test rotation";
     text = "test text alpha";
+
 }
 
 //--------------------------------------------------------------
@@ -39,23 +40,31 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 
-
-
+    const char *strUsername = username.c_str();
+    const char *strText = text.c_str();
     ofSetColor(255,255,255);
-    ofPushMatrix();
-		ofRectangle bounds = verdana30.getStringBoundingBox(username, 155, 52);
-
-		ofTranslate(155 + bounds.width/2, 232 + bounds.height / 2, 0);
-		ofRotateY(ofGetElapsedTimef() * -30.0);
-
-		verdana30.drawString(username, -bounds.width/2, bounds.height/2 );
-	ofPopMatrix();
+    ofTranslate(192, 252, 0);
+    for(int i=0; i<username.length();i++)
+    {
+        strPerU.assign(1,strUsername[i]);
+        ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 52, 52);
+        ofTranslate(20, 0, 0);
+        ofPushMatrix();
+            ofRotateY(ofGetElapsedTimef() * -100.0);
+            verdana30.drawString(strPerU, -bounds.width/2, bounds.height/2 );
+        ofPopMatrix();
+    }
 
     alpha = ofGetElapsedTimef() * 0.2;
     ofEnableAlphaBlending();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    glColor4f( 1.0, 1.0, 1.0, alpha );
-    verdana30.drawString(text, 155, 292);
+    for(int i=0; i<text.length();i++)
+    {
+        strPerT.assign(1,strText[i]);
+        ofTranslate(20, 0, 0);
+        glColor4f( 1.0, 1.0, 1.0, alpha-i*0.1 );
+        verdana30.drawString(strPerT, 0, 0);
+    }
     ofDisableAlphaBlending();
 
 }
