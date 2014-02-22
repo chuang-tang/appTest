@@ -50,7 +50,7 @@ void testApp::draw(){
         ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 52, 52);
         ofTranslate(20, 0, 0);
         ofPushMatrix();
-            ofRotateY(ofGetElapsedTimef() * -100.0);
+            ofRotateY((ofGetElapsedTimef()-i) * -200.0);
             verdana30.drawString(strPerU, -bounds.width/2, bounds.height/2 );
         ofPopMatrix();
     }
@@ -63,7 +63,7 @@ void testApp::draw(){
         strPerT.assign(1,strText[i]);
         ofTranslate(20, 0, 0);
         glColor4f( 1.0, 1.0, 1.0, alpha-i*0.1 );
-        verdana30.drawString(strPerT, 0, 0);
+        verdana14.drawString(strPerT, 0, 0);
     }
     ofDisableAlphaBlending();
 
