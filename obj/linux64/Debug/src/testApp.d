@@ -1,4 +1,9 @@
 obj/linux64/Debug/src/testApp.o: src/testApp.cpp src/testApp.h \
+ src/../include/twitcurl.h src/../include/oauthlib.h \
+ src/../include/curl/curl.h src/../include/curl/curlver.h \
+ src/../include/curl/curlbuild.h src/../include/curl/curlrules.h \
+ src/../include/curl/easy.h src/../include/curl/multi.h \
+ src/../include/curl/curl.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/ofMain.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/utils/ofConstants.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/tess2/include/tesselator.h \
@@ -311,6 +316,24 @@ obj/linux64/Debug/src/testApp.o: src/testApp.cpp src/testApp.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/3d/ofEasyCam.h
 
 src/testApp.h:
+
+src/../include/twitcurl.h:
+
+src/../include/oauthlib.h:
+
+src/../include/curl/curl.h:
+
+src/../include/curl/curlver.h:
+
+src/../include/curl/curlbuild.h:
+
+src/../include/curl/curlrules.h:
+
+src/../include/curl/easy.h:
+
+src/../include/curl/multi.h:
+
+src/../include/curl/curl.h:
 
 /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/ofMain.h:
 

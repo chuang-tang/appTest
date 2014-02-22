@@ -4,7 +4,7 @@
 void testApp::setup(){
     ofBackground(54, 54, 54, 255);
 
-	//old OF default is 96 - but this results in fonts looking larger than in other programs.
+	// Set fonts of display
 	ofTrueTypeFont::setGlobalDpi(72);
 
 	verdana14.loadFont("verdana.ttf", 14, true, true);
@@ -15,20 +15,49 @@ void testApp::setup(){
 	verdana30.setLineHeight(34.0f);
 	verdana30.setLetterSpacing(1.035);
 
-	verdana14A.loadFont("verdana.ttf", 14, false);
-	verdana14A.setLineHeight(18.0f);
-	verdana14A.setLetterSpacing(1.037);
+    // OAuth flow begins
+    // Set OAuth related params. These are got by registering your app at twitter.com
+    twitterObj.getOAuth().setConsumerKey( string( "C65GavtfFCZApq7kYz4w" ) );
+    twitterObj.getOAuth().setConsumerSecret( string( "JH7KS1B0zKldhkay4mN9yA5DvVNlQYOhAYAYqcwNc14" ) );
+    string myOAuthAccessTokenKey("371718714-whlxhOIrUy6I4L5DyGlujIeutr9ufkO9IBP9crql");
+    string myOAuthAccessTokenSecret("ul1FWGsnJdMzGZncw9kG91sGwA07nIgtrERfzix3bb0L0");
 
-	franklinBook14.loadFont("frabk.ttf", 14);
-	franklinBook14.setLineHeight(18.0f);
-	franklinBook14.setLetterSpacing(1.037);
+    printf( "\nUsing:\nKey: %s\nSecret: %s\n\n", myOAuthAccessTokenKey.c_str(), myOAuthAccessTokenSecret.c_str() );
 
-	franklinBook14A.loadFont("frabk.ttf", 14, false);
-	franklinBook14A.setLineHeight(18.0f);
-	franklinBook14A.setLetterSpacing(1.037);
+    twitterObj.getOAuth().setOAuthTokenKey( myOAuthAccessTokenKey );
+    twitterObj.getOAuth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
 
-    username = "test rotation";
-    text = "test text alpha";
+    /* Search a string */
+    hashtag="app";
+    result_num="1";
+    replyMsg = "";
+    if( twitterObj.search( hashtag, result_num) )
+    {
+        twitterObj.getLastWebResponse( replyMsg );
+        printf( "\ntwitterClient:: twitCurl::search web response:\n%s\n", replyMsg.c_str() );
+    }
+    else
+    {
+        twitterObj.getLastCurlError( replyMsg );
+        printf( "\ntwitterClient:: twitCurl::search error:\n%s\n", replyMsg.c_str() );
+    }
+
+    string text_symbol("\"text\"");
+    string text_end_symbol("\"source\"");
+
+    string name_symbol("\"name\"");
+    string name_end_symbol("\"screen");
+
+    int text_start = replyMsg.find(text_symbol) + text_symbol.length()+ 2;
+    int text_end = replyMsg.find(text_end_symbol) - 2;
+
+    int name_start = replyMsg.find(name_symbol) + name_symbol.length() + 2;
+    int name_end = replyMsg.find(name_end_symbol) - 2;
+
+    std::cout<<name_start<<"   "<<name_end<<std::endl;
+
+    username.assign(replyMsg, name_start, name_end - name_start);
+    text.assign(replyMsg, text_start, text_end - text_start);
 
 }
 

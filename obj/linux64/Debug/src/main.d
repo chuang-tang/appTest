@@ -309,7 +309,11 @@ obj/linux64/Debug/src/main.o: src/main.cpp \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/video/ofGstVideoPlayer.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/3d/ofCamera.h \
  /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/3d/ofEasyCam.h \
- src/testApp.h
+ src/testApp.h src/../include/twitcurl.h src/../include/oauthlib.h \
+ src/../include/curl/curl.h src/../include/curl/curlver.h \
+ src/../include/curl/curlbuild.h src/../include/curl/curlrules.h \
+ src/../include/curl/easy.h src/../include/curl/multi.h \
+ src/../include/curl/curl.h
 
 /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/ofMain.h:
 
@@ -964,3 +968,21 @@ obj/linux64/Debug/src/main.o: src/main.cpp \
 /home/charles/Software/of_v0.8.0_linux64_release/libs/openFrameworks/3d/ofEasyCam.h:
 
 src/testApp.h:
+
+src/../include/twitcurl.h:
+
+src/../include/oauthlib.h:
+
+src/../include/curl/curl.h:
+
+src/../include/curl/curlver.h:
+
+src/../include/curl/curlbuild.h:
+
+src/../include/curl/curlrules.h:
+
+src/../include/curl/easy.h:
+
+src/../include/curl/multi.h:
+
+src/../include/curl/curl.h:

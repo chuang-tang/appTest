@@ -1,4 +1,8 @@
 #pragma once
+#include <cstdio>
+#include <iostream>
+#include <fstream>
+#include "../include/twitcurl.h"
 
 #include "ofMain.h"
 
@@ -30,6 +34,9 @@ class testApp : public ofBaseApp{
         string text;
         string strPerU;
         string strPerT;
+        twitCurl twitterObj;
+        string hashtag, result_num;
+        string replyMsg;
 		float alpha = 0;
 
 };
