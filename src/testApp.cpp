@@ -16,6 +16,11 @@ void testApp::setup(){
 	verdana30.loadFont("verdana.ttf", 30, true, true);
 	verdana30.setLineHeight(34.0f);
 	verdana30.setLetterSpacing(1.035);
+	getStr();
+
+}
+
+void testApp::getStr(){
 
     // OAuth flow begins
     // Set OAuth related params. These are got by registering your app at twitter.com
@@ -63,12 +68,19 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-
+    int time = ofGetElapsedTimef();
+    if(time == 3.0)
+    {
+        ofClear ( 54, 54, 54 );
+        getStr();
+        ofResetElapsedTimeCounter();
+    }
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
 
+    printf("%f\n",ofGetElapsedTimef());
     const char *strUsername = username.c_str();
     const char *strText = text.c_str();
     ofSetColor(255,255,255);
@@ -79,10 +91,10 @@ void testApp::draw(){
         strPerU.assign(1,strUsername[i]);
         ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 34, 34);
         ofPushMatrix();
-            if((ofGetElapsedTimef()-i) * -100 < -360)
+            if((ofGetElapsedTimef()) * -360 + i * 10 < -360)
                 ofRotateY(0);
             else
-                ofRotateY((ofGetElapsedTimef()-i) * -100.0);
+                ofRotateY((ofGetElapsedTimef()-i) * -360.0 + i * 10);
             verdana30.drawString(strPerU, -bounds.width/2, bounds.height/2 );
         ofPopMatrix();
     }
@@ -90,7 +102,7 @@ void testApp::draw(){
     int lineNum = 0;
     int letterNumPerLine = 0;
     bool changeLine = 0;
-    alpha = ofGetElapsedTimef() * 0.7;
+    alpha = ofGetElapsedTimef() * 2;
     ofEnableAlphaBlending();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     ofTranslate(50, 0, 0);
@@ -103,7 +115,7 @@ void testApp::draw(){
             strPerT.assign(1,strText[i]);
         }
 
-        glColor4f( 1.0, 1.0, 1.0, alpha-j*0.1 );
+        glColor4f( 1.0, 1.0, 1.0, alpha-j*0.01 );
         verdana14.drawString(strPerT, letterNumPerLine * 10, lineNum * 20);
         letterNumPerLine++;
         if(letterNumPerLine%30 == 0)
