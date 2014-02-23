@@ -35,7 +35,7 @@ void testApp::getStr(){
     twitterObj.getOAuth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
 
     /* Search a string */
-    hashtag="England";
+    hashtag="iphone&lang=en";
     result_num="1";
     replyMsg = "";
     if( twitterObj.search( hashtag, result_num) )
@@ -47,6 +47,12 @@ void testApp::getStr(){
     {
         twitterObj.getLastCurlError( replyMsg );
         printf( "\ntwitterClient:: twitCurl::search error:\n%s\n", replyMsg.c_str() );
+    }
+
+    if(replyMsg.find("\"errors\"") != string::npos)
+    {
+        printf("There are some errors happened!!\n");
+        return;
     }
 
     string text_symbol("\"text\"");
@@ -73,6 +79,8 @@ void testApp::update(){
     {
         ofClear ( 54, 54, 54 );
         getStr();
+        while(username.find("\\u")!=string::npos || text.find("\\u")!=string::npos)
+            getStr();
         ofResetElapsedTimeCounter();
     }
 }
@@ -83,19 +91,27 @@ void testApp::draw(){
     printf("%f\n",ofGetElapsedTimef());
     const char *strUsername = username.c_str();
     const char *strText = text.c_str();
-    ofSetColor(255,255,255);
-    ofTranslate(100, 252, 0);
+    ofEnableAlphaBlending();
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    alpha = ofGetElapsedTimef() * 1;
+    ofTranslate(100, 300, 0);
     for(int i=0; i<username.length();i++)
     {
         ofTranslate(20, 0, 0);
+        glColor4f( 1.0, 1.0, 1.0, alpha-i*0.1 );
         strPerU.assign(1,strUsername[i]);
+        if(strPerT == "\\")
+        {
+            i++;
+            strPerU.assign(1,strUsername[i]);
+        }
         ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 34, 34);
         ofPushMatrix();
-            if((ofGetElapsedTimef()) * -360 + i * 10 < -360)
+            if((ofGetElapsedTimef()) * -360 + i * 20 < -360)
                 ofRotateY(0);
             else
-                ofRotateY((ofGetElapsedTimef()-i) * -360.0 + i * 10);
-            verdana30.drawString(strPerU, -bounds.width/2, bounds.height/2 );
+                ofRotateY((ofGetElapsedTimef()-i) * -360.0 + i * 20);
+                verdana30.drawString(strPerU, -bounds.width/2, 0 );
         ofPopMatrix();
     }
 
@@ -103,12 +119,11 @@ void testApp::draw(){
     int letterNumPerLine = 0;
     bool changeLine = 0;
     alpha = ofGetElapsedTimef() * 2;
-    ofEnableAlphaBlending();
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    ofTranslate(50, 0, 0);
+    ofTranslate(50, -20, 0);
     for(int i=0,j=0; i<text.length();i++,j++)
     {
         strPerT.assign(1,strText[i]);
+        ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 14, 14);
         if(strPerT == "\\")
         {
             i++;
@@ -116,7 +131,7 @@ void testApp::draw(){
         }
 
         glColor4f( 1.0, 1.0, 1.0, alpha-j*0.01 );
-        verdana14.drawString(strPerT, letterNumPerLine * 10, lineNum * 20);
+        verdana14.drawString(strPerT, letterNumPerLine * 14 - bounds.width/2, lineNum * 20);
         letterNumPerLine++;
         if(letterNumPerLine%30 == 0)
             changeLine = 1;
