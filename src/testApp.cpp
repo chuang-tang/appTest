@@ -1,7 +1,5 @@
 #include "testApp.h"
 
-const int TextWidth = 10;
-const int TextHeight = 15;
 //--------------------------------------------------------------
 void testApp::setup(){
     ofBackground(54, 54, 54, 255);
@@ -35,8 +33,11 @@ void testApp::getStr(){
     twitterObj.getOAuth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
 
     /* Search a string */
+    // Here to change the Keyword the &lang=en means here I search the English tweets
     hashtag="iphone&lang=en";
+    // This value means the number of results it will return, here I used only one tweet
     result_num="1";
+    // This string saved all the text returned
     replyMsg = "";
     if( twitterObj.search( hashtag, result_num) )
     {
@@ -79,6 +80,8 @@ void testApp::update(){
     {
         ofClear ( 54, 54, 54 );
         getStr();
+
+        //Because the ofTrueTypeFont doesn't support unicode, so if the message contains unicode letter, it will read the next tweet
         while(username.find("\\u")!=string::npos || text.find("\\u")!=string::npos)
             getStr();
         ofResetElapsedTimeCounter();
@@ -123,15 +126,14 @@ void testApp::draw(){
     for(int i=0,j=0; i<text.length();i++,j++)
     {
         strPerT.assign(1,strText[i]);
-        ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 14, 14);
         if(strPerT == "\\")
         {
             i++;
             strPerT.assign(1,strText[i]);
         }
 
-        glColor4f( 1.0, 1.0, 1.0, alpha-j*0.01 );
-        verdana14.drawString(strPerT, letterNumPerLine * 14 - bounds.width/2, lineNum * 20);
+        glColor4f( 1.0, 1.0, 1.0, alpha-j*0.04 );
+        verdana14.drawString(strPerT, letterNumPerLine * 14, lineNum * 20);
         letterNumPerLine++;
         if(letterNumPerLine%30 == 0)
             changeLine = 1;
