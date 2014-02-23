@@ -1,5 +1,7 @@
 #include "testApp.h"
 
+const int TextWidth = 10;
+const int TextHeight = 15;
 //--------------------------------------------------------------
 void testApp::setup(){
     ofBackground(54, 54, 54, 255);
@@ -28,7 +30,7 @@ void testApp::setup(){
     twitterObj.getOAuth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
 
     /* Search a string */
-    hashtag="app";
+    hashtag="England";
     result_num="1";
     replyMsg = "";
     if( twitterObj.search( hashtag, result_num) )
@@ -54,8 +56,6 @@ void testApp::setup(){
     int name_start = replyMsg.find(name_symbol) + name_symbol.length() + 2;
     int name_end = replyMsg.find(name_end_symbol) - 2;
 
-    std::cout<<name_start<<"   "<<name_end<<std::endl;
-
     username.assign(replyMsg, name_start, name_end - name_start);
     text.assign(replyMsg, text_start, text_end - text_start);
 
@@ -72,27 +72,48 @@ void testApp::draw(){
     const char *strUsername = username.c_str();
     const char *strText = text.c_str();
     ofSetColor(255,255,255);
-    ofTranslate(192, 252, 0);
+    ofTranslate(100, 252, 0);
     for(int i=0; i<username.length();i++)
     {
-        strPerU.assign(1,strUsername[i]);
-        ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 52, 52);
         ofTranslate(20, 0, 0);
+        strPerU.assign(1,strUsername[i]);
+        ofRectangle bounds = verdana30.getStringBoundingBox(strPerU, 34, 34);
         ofPushMatrix();
-            ofRotateY((ofGetElapsedTimef()-i) * -200.0);
+            if((ofGetElapsedTimef()-i) * -100 < -360)
+                ofRotateY(0);
+            else
+                ofRotateY((ofGetElapsedTimef()-i) * -100.0);
             verdana30.drawString(strPerU, -bounds.width/2, bounds.height/2 );
         ofPopMatrix();
     }
 
-    alpha = ofGetElapsedTimef() * 0.2;
+    int lineNum = 0;
+    int letterNumPerLine = 0;
+    bool changeLine = 0;
+    alpha = ofGetElapsedTimef() * 0.7;
     ofEnableAlphaBlending();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    for(int i=0; i<text.length();i++)
+    ofTranslate(50, 0, 0);
+    for(int i=0,j=0; i<text.length();i++,j++)
     {
         strPerT.assign(1,strText[i]);
-        ofTranslate(20, 0, 0);
-        glColor4f( 1.0, 1.0, 1.0, alpha-i*0.1 );
-        verdana14.drawString(strPerT, 0, 0);
+        if(strPerT == "\\")
+        {
+            i++;
+            strPerT.assign(1,strText[i]);
+        }
+
+        glColor4f( 1.0, 1.0, 1.0, alpha-j*0.1 );
+        verdana14.drawString(strPerT, letterNumPerLine * 10, lineNum * 20);
+        letterNumPerLine++;
+        if(letterNumPerLine%30 == 0)
+            changeLine = 1;
+        if(strPerT == " " && changeLine)
+        {
+            lineNum++;
+            letterNumPerLine = 0;
+            changeLine = 0;
+        }
     }
     ofDisableAlphaBlending();
 
